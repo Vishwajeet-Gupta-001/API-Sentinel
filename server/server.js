@@ -1,4 +1,5 @@
 import express from "express";
+import connectDB from "./config/db.js";
 
 const app = express();
 
@@ -8,6 +9,10 @@ app.get("/api/v1/health", (req, res) => {
   });
 });
 
-app.listen(5000, () => {
-  console.log("API Sentinel server running on port 5000");
+const PORT = process.env.PORT || 5000;
+
+await connectDB();
+
+app.listen(PORT, () => {
+  console.log(`API Sentinel server running on port ${PORT}`);
 });
