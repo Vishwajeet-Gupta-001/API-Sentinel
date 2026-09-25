@@ -2,6 +2,7 @@ import express from "express";
 import { authMiddleware } from "../middleware/authMiddleware.js";
 import {
   acknowledgeIncidentController,
+  resolveIncidentController,
   getIncidentsController,
   getIncidentController,
 } from "../controllers/incidentController.js";
@@ -16,5 +17,7 @@ router.patch(
   authMiddleware,
   acknowledgeIncidentController,
 );
+
+router.patch("/:incidentId/resolve", authMiddleware, resolveIncidentController);
 
 export default router;

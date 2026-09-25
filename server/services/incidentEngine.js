@@ -63,4 +63,28 @@ const resolveIncidentIfNeeded = async ({ monitor }) => {
   return activeIncident;
 };
 
-export { createIncidentIfNeeded, acknowledgeIncident, resolveIncidentIfNeeded };
+const resolveIncident = async ({ incidentId }) => {
+  const incident = await Incident.findById(incidentId);
+
+  if (!incident) {
+    return null;
+  }
+
+  if (incident.status === "RESOLVED") {
+    return incident;
+  }
+
+  incident.status = "RESOLVED";
+  incident.resolvedAt = new Date();
+
+  await incident.save();
+
+  return incident;
+};
+
+export {
+  createIncidentIfNeeded,
+  acknowledgeIncident,
+  resolveIncidentIfNeeded,
+  resolveIncident,
+};
