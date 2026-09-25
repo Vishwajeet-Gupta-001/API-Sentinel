@@ -4,6 +4,10 @@ import Redis from "ioredis";
 import connectDB from "../config/db.js";
 import Monitor from "../models/Monitor.js";
 import CheckResult from "../models/CheckResult.js";
+import {
+  createIncidentIfNeeded,
+  resolveIncidentIfNeeded,
+} from "../services/incidentEngine.js";
 
 const workerConnection = new Redis(process.env.REDIS_URL, {
   maxRetriesPerRequest: null,
@@ -94,6 +98,12 @@ const monitoringWorker = new Worker(
       });
     }
 
+    if (checkSuccessful) {
+      await resolveIncidentIfNeeded({
+        monitor,
+      });
+    }
+
     if (!checkSuccessful) {
       const updatedMonitor = await Monitor.findByIdAndUpdate(
         monitorId,
@@ -111,6 +121,11 @@ const monitoringWorker = new Worker(
         updatedMonitor.consecutiveFailures >= updatedMonitor.failureThreshold
       ) {
         console.log("Failure threshold reached");
+
+        await createIncidentIfNeeded({
+          monitor: updatedMonitor,
+          lastError: error,
+        });
       }
     }
 
