@@ -8,6 +8,7 @@ import {
   createIncidentIfNeeded,
   resolveIncidentIfNeeded,
 } from "../services/incidentEngine.js";
+import publisher from "../pubsub/pubsubPublisher.js";
 
 const workerConnection = new Redis(process.env.REDIS_URL, {
   maxRetriesPerRequest: null,
@@ -91,6 +92,27 @@ const monitoringWorker = new Worker(
     await Monitor.findByIdAndUpdate(monitorId, {
       lastCheckedAt: new Date(),
     });
+
+    const newStatus = checkSuccessful ? "UP" : "DOWN";
+
+    if (monitor.status !== "PAUSED" && monitor.status !== newStatus) {
+      await Monitor.findByIdAndUpdate(monitorId, {
+        status: newStatus,
+      });
+
+      console.log(`Monitor status changed: ${monitor.status} → ${newStatus}`);
+
+      await publisher.publish(
+        "api-sentinel-events",
+        JSON.stringify({
+          event: "monitor:status_changed",
+          data: {
+            monitorId,
+            status: newStatus,
+          },
+        }),
+      );
+    }
 
     if (checkSuccessful) {
       await Monitor.findByIdAndUpdate(monitorId, {

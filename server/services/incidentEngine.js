@@ -1,4 +1,5 @@
 import Incident from "../models/Incident.js";
+import publisher from "../pubsub/pubsubPublisher.js";
 
 const createIncidentIfNeeded = async ({ monitor, lastError }) => {
   const existingIncident = await Incident.findOne({
@@ -21,6 +22,18 @@ const createIncidentIfNeeded = async ({ monitor, lastError }) => {
     lastError,
   });
 
+  await publisher.publish(
+    "api-sentinel-events",
+    JSON.stringify({
+      event: "incident:created",
+      data: {
+        incidentId: incident._id.toString(),
+        monitorId: monitor._id.toString(),
+        status: incident.status,
+      },
+    }),
+  );
+
   return incident;
 };
 
@@ -39,6 +52,18 @@ const acknowledgeIncident = async ({ incidentId }) => {
   incident.acknowledgedAt = new Date();
 
   await incident.save();
+
+  await publisher.publish(
+    "api-sentinel-events",
+    JSON.stringify({
+      event: "incident:acknowledged",
+      data: {
+        incidentId: incident._id.toString(),
+        monitorId: incident.monitorId.toString(),
+        status: incident.status,
+      },
+    }),
+  );
 
   return incident;
 };
@@ -60,6 +85,18 @@ const resolveIncidentIfNeeded = async ({ monitor }) => {
 
   await activeIncident.save();
 
+  await publisher.publish(
+    "api-sentinel-events",
+    JSON.stringify({
+      event: "incident:resolved",
+      data: {
+        incidentId: activeIncident._id.toString(),
+        monitorId: activeIncident.monitorId.toString(),
+        status: activeIncident.status,
+      },
+    }),
+  );
+
   return activeIncident;
 };
 
@@ -78,6 +115,18 @@ const resolveIncident = async ({ incidentId }) => {
   incident.resolvedAt = new Date();
 
   await incident.save();
+
+  await publisher.publish(
+    "api-sentinel-events",
+    JSON.stringify({
+      event: "incident:resolved",
+      data: {
+        incidentId: incident._id.toString(),
+        monitorId: incident.monitorId.toString(),
+        status: incident.status,
+      },
+    }),
+  );
 
   return incident;
 };
