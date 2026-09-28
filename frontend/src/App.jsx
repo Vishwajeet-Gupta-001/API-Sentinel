@@ -3,6 +3,9 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import AppLayout from "./AppLayout";
 import ProtectedRoute from "./ProtectedRoute";
+import CreateMonitor from "./pages/CreateMonitor";
+import MonitorDetails from "./pages/MonitorDetails";
+import EditMonitor from "./pages/EditMonitor";
 
 function App() {
   return (
@@ -19,6 +22,34 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route
+            path="/create-monitor"
+            element={
+              <ProtectedRoute>
+                <CreateMonitor />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/dashboard/monitors/:monitorId"
+            element={
+              <ProtectedRoute>
+                <MonitorDetails />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/dashboard/monitors/:monitorId/edit"
+            element={
+              <ProtectedRoute>
+                <EditMonitor />
+              </ProtectedRoute>
+            }
+          />
+          
         </Route>
       </Routes>
     </BrowserRouter>

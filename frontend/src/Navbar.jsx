@@ -11,6 +11,7 @@ function Navbar() {
 
       <Link to="/login">Login</Link>
       <Link to="/dashboard">Dashboard</Link>
+      <Link to="/create-monitor">Create Monitor</Link>
 
       <p>Authenticated: {isAuthenticated ? "Yes" : "No"}</p>
 

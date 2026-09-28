@@ -30,6 +30,7 @@ function Dashboard() {
       {monitors.map((monitor) => (
         <MonitorCard
           key={monitor._id}
+          monitorId={monitor._id}
           name={monitor.name}
           url={monitor.url}
           status={monitor.status}
