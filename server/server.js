@@ -1,6 +1,7 @@
 import express from "express";
 import http from "http";
 import { Server } from "socket.io";
+import cors from "cors";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import monitorRoutes from "./routes/monitorRoutes.js";
@@ -8,6 +9,12 @@ import incidentRoutes from "./routes/incidentRoutes.js";
 import initializeSubscriber from "./pubsub/pubsubSubscriber.js";
 
 const app = express();
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  }),
+);
 
 const httpServer = http.createServer(app);
 
