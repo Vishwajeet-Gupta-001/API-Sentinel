@@ -6,12 +6,14 @@ import ProtectedRoute from "./ProtectedRoute";
 import CreateMonitor from "./pages/CreateMonitor";
 import MonitorDetails from "./pages/MonitorDetails";
 import EditMonitor from "./pages/EditMonitor";
+import Register from "./pages/Register";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
         <Route element={<AppLayout />}>
           <Route
@@ -49,7 +51,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-          
         </Route>
       </Routes>
     </BrowserRouter>

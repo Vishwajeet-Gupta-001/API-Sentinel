@@ -1,25 +1,27 @@
-import { useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import AuthContext from "../context/AuthContext";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
-function Login() {
-  const navigate = useNavigate();
-  const { setIsAuthenticated } = useContext(AuthContext);
-
+function Register() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
   async function handleSubmit(event) {
     event.preventDefault();
+
+    setMessage("");
     setError("");
 
-    const response = await fetch("http://localhost:5000/api/v1/auth/login", {
+    const response = await fetch("http://localhost:5000/api/v1/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        name,
         email,
         password,
       }),
@@ -28,25 +30,32 @@ function Login() {
     const data = await response.json();
 
     if (response.ok) {
-      localStorage.setItem("token", data.token);
-      setIsAuthenticated(true);
-
-      console.log("Login successful:", data);
-
-      navigate("/dashboard");
+      setMessage(data.message);
     } else {
       setError(data.message);
-      console.log("Login failed:", data);
     }
   }
 
   return (
     <div>
-      <h1>Login</h1>
+      <h1>Register</h1>
+
+      {message && <p>{message}</p>}
 
       {error && <p>{error}</p>}
 
       <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="name">Name</label>
+
+          <input
+            id="name"
+            type="text"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+          />
+        </div>
+
         <div>
           <label htmlFor="email">Email</label>
 
@@ -69,14 +78,15 @@ function Login() {
           />
         </div>
 
-        <button type="submit">Login</button>
+        <button type="submit">Register</button>
       </form>
 
       <p>
-        Don't have an account? <Link to="/register">Register</Link>
+        Already have an account? <Link to="/login">Login</Link>
       </p>
+      
     </div>
   );
 }
 
-export default Login;
+export default Register;
