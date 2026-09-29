@@ -6,8 +6,9 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import monitorRoutes from "./routes/monitorRoutes.js";
 import incidentRoutes from "./routes/incidentRoutes.js";
-import initializeSubscriber from "./pubsub/pubsubSubscriber.js";
+import dashboardRoutes from "./routes/dashboardRoutes.js";
 import { startMonitoringScheduler } from "./scheduler/monitoringScheduler.js";
+import initializeSubscriber from "./pubsub/pubsubSubscriber.js";
 
 
 const app = express();
@@ -32,6 +33,7 @@ app.use(express.json());
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/monitors", monitorRoutes);
 app.use("/api/v1/incidents", incidentRoutes);
+app.use("/api/v1/dashboard", dashboardRoutes);
 
 app.get("/api/v1/health", (req, res) => {
   res.json({
