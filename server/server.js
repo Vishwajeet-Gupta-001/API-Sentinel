@@ -7,6 +7,8 @@ import authRoutes from "./routes/authRoutes.js";
 import monitorRoutes from "./routes/monitorRoutes.js";
 import incidentRoutes from "./routes/incidentRoutes.js";
 import initializeSubscriber from "./pubsub/pubsubSubscriber.js";
+import { startMonitoringScheduler } from "./scheduler/monitoringScheduler.js";
+
 
 const app = express();
 
@@ -40,6 +42,8 @@ app.get("/api/v1/health", (req, res) => {
 const PORT = process.env.PORT || 5000;
 
 await connectDB();
+
+await startMonitoringScheduler();
 
 httpServer.listen(PORT, () => {
   console.log(`API Sentinel server running on port ${PORT}`);

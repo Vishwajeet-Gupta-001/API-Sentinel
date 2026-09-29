@@ -27,6 +27,14 @@ const monitoringWorker = new Worker(
 
     const monitor = await Monitor.findById(monitorId);
 
+    if (!monitor) {
+      console.log(`Monitor not found: ${monitorId}`);
+      return {
+        processed: false,
+        reason: "MONITOR_NOT_FOUND",
+      };
+    }
+
     console.log("Monitor name:", monitor.name);
     console.log("Monitor URL:", monitor.url);
 
