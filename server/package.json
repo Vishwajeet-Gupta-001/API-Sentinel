@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node --env-file=.env server.js",
+    "dev": "concurrently \"npm start\" \"node --env-file=.env workers/monitoringWorker.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -23,6 +24,7 @@
     "socket.io": "^4.8.4"
   },
   "devDependencies": {
+    "concurrently": "^10.0.5",
     "socket.io-client": "^4.8.4"
   }
 }
