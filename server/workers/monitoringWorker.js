@@ -87,7 +87,7 @@ const monitoringWorker = new Worker(
      console.log("Check successful:", checkSuccessful);
    }
 
-    await CheckResult.create({
+    const checkResult = await CheckResult.create({
       monitorId,
       status: checkSuccessful ? "SUCCESS" : "FAILURE",
       httpStatus,
@@ -96,6 +96,23 @@ const monitoringWorker = new Worker(
       timedOut,
       checkedAt: new Date(),
     });
+
+    await publisher.publish(
+      "api-sentinel-events",
+      JSON.stringify({
+        event: "check:created",
+        data: {
+          _id: checkResult._id.toString(),
+          monitorId: checkResult.monitorId.toString(),
+          status: checkResult.status,
+          httpStatus: checkResult.httpStatus,
+          responseTime: checkResult.responseTime,
+          error: checkResult.error,
+          timedOut: checkResult.timedOut,
+          checkedAt: checkResult.checkedAt,
+        },
+      }),
+    );
 
     await Monitor.findByIdAndUpdate(monitorId, {
       lastCheckedAt: new Date(),
