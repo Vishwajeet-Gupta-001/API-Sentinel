@@ -182,3 +182,158 @@ code {
   font-weight: 600;
   color: #dc2626;
 }
+
+.incident-table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.incident-table th,
+.incident-table td {
+  padding: 12px;
+  border: 1px solid var(--border);
+  text-align: center;
+}
+
+.incident-table th {
+  background: var(--code-bg);
+  color: var(--text-h);
+  font-weight: 600;
+}
+
+.incident-table td {
+  color: var(--text);
+}
+
+.incident-table tr:hover {
+  background: var(--accent-bg);
+}
+
+.incident-status {
+  font-weight: 600;
+}
+
+.incident-status.open {
+  color: #dc2626;
+}
+
+.incident-status.acknowledged {
+  color: #ca8a04;
+}
+
+.incident-status.resolved {
+  color: #15803d;
+}
+
+.incident-details-card {
+  width: 700px;
+  max-width: 90%;
+  margin: 30px auto;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: left;
+}
+
+.incident-detail-row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  border-bottom: 1px solid var(--border);
+}
+
+.incident-detail-row:last-child {
+  border-bottom: none;
+}
+
+.incident-detail-row strong,
+.incident-detail-row span {
+  padding: 14px 16px;
+}
+
+.incident-detail-row strong {
+  background: var(--code-bg);
+  color: var(--text-h);
+}
+
+.incident-detail-row span {
+  color: var(--text);
+}
+
+.incident-action-button {
+  display: block;
+  width: 700px;
+  max-width: 90%;
+  margin: 22px auto 0;
+  box-sizing: border-box;
+
+  padding: 15px 24px;
+
+  border: none;
+  border-radius: 8px;
+
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.acknowledge-button {
+  background: #ca8a04;
+  color: white;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
+}
+
+.acknowledge-button:hover {
+  background: #a16207;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.22);
+}
+
+.acknowledge-button:active {
+  transform: translateY(0);
+}
+
+.resolve-button {
+  background: #15803d;
+  color: white;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
+}
+
+.resolve-button:hover {
+  background: #166534;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.22);
+}
+
+.resolve-button:active {
+  transform: translateY(0);
+}
+
+.incident-view-button {
+  padding: 6px 14px;
+  border: 1px solid var(--accent);
+  border-radius: 5px;
+  background: transparent;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.incident-view-button:hover {
+  background: var(--accent);
+  color: white;
+  transform: translateY(-1px);
+}

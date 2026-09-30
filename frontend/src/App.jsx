@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import AppLayout from "./AppLayout";
@@ -6,7 +7,8 @@ import ProtectedRoute from "./ProtectedRoute";
 import CreateMonitor from "./pages/CreateMonitor";
 import MonitorDetails from "./pages/MonitorDetails";
 import EditMonitor from "./pages/EditMonitor";
-import Register from "./pages/Register";
+import Incidents from "./pages/Incidents";
+import IncidentDetails from "./pages/IncidentDetails";
 
 function App() {
   return (
@@ -48,6 +50,24 @@ function App() {
             element={
               <ProtectedRoute>
                 <EditMonitor />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/incidents"
+            element={
+              <ProtectedRoute>
+                <Incidents />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/incidents/:incidentId"
+            element={
+              <ProtectedRoute>
+                <IncidentDetails />
               </ProtectedRoute>
             }
           />
