@@ -1,4 +1,5 @@
 import Monitor from "../models/Monitor.js";
+import CheckResult from "../models/CheckResult.js";
 
 const createMonitor = async (req, res) => {
   try {
@@ -262,4 +263,38 @@ const getMonitorStatus = async (req, res) => {
   }
 };
 
-export { createMonitor, getMonitors, getMonitor, updateMonitor, deleteMonitor, enableMonitor, disableMonitor, getMonitorStatus};
+const getCheckHistory = async (req, res) => {
+  try {
+    const monitor = await Monitor.findOne({
+      _id: req.params.monitorId,
+      userId: req.userId,
+    });
+
+    if (!monitor) {
+      return res.status(404).json({
+        message: "Monitor not found",
+      });
+    }
+
+    const checks = await CheckResult.find({
+      monitorId: req.params.monitorId,
+    }).sort({ checkedAt: -1 });
+
+    res.status(200).json({
+      checks,
+    });
+  } catch (error) {
+    if (error.name === "CastError") {
+      return res.status(400).json({
+        message: "Invalid monitor ID",
+      });
+    }
+
+    res.status(500).json({
+      message: "Server error",
+      error: error.message,
+    });
+  }
+};
+
+export { createMonitor, getMonitors, getMonitor, updateMonitor, deleteMonitor, enableMonitor, disableMonitor, getMonitorStatus, getCheckHistory};

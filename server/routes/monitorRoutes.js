@@ -7,7 +7,8 @@ import {
   deleteMonitor,
   enableMonitor,
   disableMonitor,
-  getMonitorStatus
+  getMonitorStatus,
+  getCheckHistory
 } from "../controllers/monitorController.js";
 import { authMiddleware } from "../middleware/authMiddleware.js";
 
@@ -21,5 +22,6 @@ router.delete("/:monitorId", authMiddleware, deleteMonitor);
 router.patch("/:monitorId/enable", authMiddleware, enableMonitor);
 router.patch("/:monitorId/disable", authMiddleware, disableMonitor);
 router.get("/:monitorId/status", authMiddleware, getMonitorStatus);
+router.get("/:monitorId/checks", authMiddleware, getCheckHistory);
 
 export default router;
