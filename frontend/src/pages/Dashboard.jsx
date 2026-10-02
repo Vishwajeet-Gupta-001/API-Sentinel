@@ -1,9 +1,22 @@
 import { useEffect, useState } from "react";
 import MonitorCard from "../MonitorCard";
+import {
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  BarChart,
+  Bar,
+  Legend,
+} from "recharts";
 
 function Dashboard() {
   const [monitors, setMonitors] = useState([]);
   const [summary, setSummary] = useState(null);
+  const [analytics, setAnalytics] = useState(null);
 
   useEffect(() => {
     async function fetchMonitors() {
@@ -37,8 +50,26 @@ function Dashboard() {
       setSummary(data.summary);
     }
 
+    async function fetchAnalytics() {
+      const token = localStorage.getItem("token");
+
+      const response = await fetch(
+        "http://localhost:5000/api/v1/dashboard/analytics",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      const data = await response.json();
+
+      setAnalytics(data);
+    }
+
     fetchMonitors();
     fetchSummary();
+    fetchAnalytics();
   }, []);
 
   return (
@@ -75,6 +106,98 @@ function Dashboard() {
               <h3>Active Incidents</h3>
               <p>{summary.activeIncidents}</p>
             </div>
+          </div>
+        </div>
+      )}
+
+      {analytics && (
+        <div className="analytics-section">
+          <h2>Analytics (Last 24 Hours)</h2>
+
+          <div className="analytics-cards">
+            <div className="analytics-card">
+              <h3>Uptime</h3>
+              <p>
+                {analytics.uptimePercentage === null
+                  ? "N/A"
+                  : `${analytics.uptimePercentage.toFixed(2)}%`}
+              </p>
+            </div>
+
+            <div className="analytics-card">
+              <h3>Average Response Time</h3>
+              <p>
+                {analytics.averageResponseTime === null
+                  ? "N/A"
+                  : `${Math.round(analytics.averageResponseTime)} ms`}
+              </p>
+            </div>
+
+            <div className="analytics-card">
+              <h3>Successful Checks</h3>
+              <p>{analytics.successfulChecks}</p>
+            </div>
+
+            <div className="analytics-card">
+              <h3>Failed Checks</h3>
+              <p>{analytics.failedChecks}</p>
+            </div>
+          </div>
+
+          <div className="analytics-chart">
+            <h3>Response Time History</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={analytics.recentResponseTimes}>
+                <CartesianGrid strokeDasharray="3 3" />
+
+                <XAxis
+                  dataKey="checkedAt"
+                  tickFormatter={(value) =>
+                    new Date(value).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })
+                  }
+                />
+
+                <YAxis />
+
+                <Tooltip />
+
+                <Line
+                  type="monotone"
+                  dataKey="responseTime"
+                  name="Response Time"
+                  stroke="#2563eb"
+                  strokeWidth={2}
+                  dot={false}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+
+          <div className="analytics-chart">
+            <h3>Check Results (Last 24 Hours)</h3>
+
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart
+                data={[
+                  {
+                    name: "Checks",
+                    Successful: analytics.successfulChecks,
+                    Failed: analytics.failedChecks,
+                  },
+                ]}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis allowDecimals={false} />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="Successful" fill="#16a34a" />
+                <Bar dataKey="Failed" fill="#dc2626" />
+              </BarChart>
+            </ResponsiveContainer>
           </div>
         </div>
       )}
