@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
+import "./Login.css";
 
 function Login() {
   const navigate = useNavigate();
@@ -40,41 +41,58 @@ function Login() {
     }
   }
 
+  
   return (
-    <div>
-      <h1>Login</h1>
+    <div className="login-page">
+      <div className="login-card">
+        <h1>Login</h1>
 
-      {error && <p>{error}</p>}
+        <p className="login-description">
+          Welcome back! Sign in to manage your API monitors and incidents.
+        </p>
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email</label>
+        {error && (
+          <p className="login-error" role="alert">
+            {error}
+          </p>
+        )}
 
-          <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-          />
-        </div>
+        <form className="login-form" onSubmit={handleSubmit}>
+          <div className="login-field">
+            <label htmlFor="email">Email</label>
 
-        <div>
-          <label htmlFor="password">Password</label>
+            <input
+              id="email"
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              required
+            />
+          </div>
 
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </div>
+          <div className="login-field">
+            <label htmlFor="password">Password</label>
 
-        <button type="submit">Login</button>
-      </form>
+            <input
+              id="password"
+              type="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              required
+            />
+          </div>
 
-      <p>
-        Don't have an account? <Link to="/register">Register</Link>
-      </p>
+          <button className="login-submit" type="submit">
+            Login
+          </button>
+        </form>
+
+        <p className="login-register">
+          Don't have an account? <Link to="/register">Register</Link>
+        </p>
+      </div>
     </div>
   );
 }

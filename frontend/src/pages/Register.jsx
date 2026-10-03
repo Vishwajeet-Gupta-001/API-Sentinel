@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import "./Register.css";
 
 function Register() {
   const [name, setName] = useState("");
@@ -36,55 +37,77 @@ function Register() {
     }
   }
 
+  
   return (
-    <div>
-      <h1>Register</h1>
+    <div className="register-page">
+      <div className="register-card">
+        <h1>Register</h1>
 
-      {message && <p>{message}</p>}
+        <p className="register-description">
+          Create an account to start monitoring your APIs with API Sentinel.
+        </p>
 
-      {error && <p>{error}</p>}
+        {message && (
+          <p className="register-success" role="status">
+            {message}
+          </p>
+        )}
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">Name</label>
+        {error && (
+          <p className="register-error" role="alert">
+            {error}
+          </p>
+        )}
 
-          <input
-            id="name"
-            type="text"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-          />
-        </div>
+        <form className="register-form" onSubmit={handleSubmit}>
+          <div className="register-field">
+            <label htmlFor="name">Name</label>
 
-        <div>
-          <label htmlFor="email">Email</label>
+            <input
+              id="name"
+              type="text"
+              placeholder="Enter your name"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+              required
+            />
+          </div>
 
-          <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-          />
-        </div>
+          <div className="register-field">
+            <label htmlFor="email">Email</label>
 
-        <div>
-          <label htmlFor="password">Password</label>
+            <input
+              id="email"
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              required
+            />
+          </div>
 
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </div>
+          <div className="register-field">
+            <label htmlFor="password">Password</label>
 
-        <button type="submit">Register</button>
-      </form>
+            <input
+              id="password"
+              type="password"
+              placeholder="Create a password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              required
+            />
+          </div>
 
-      <p>
-        Already have an account? <Link to="/login">Login</Link>
-      </p>
-      
+          <button className="register-submit" type="submit">
+            Register
+          </button>
+        </form>
+
+        <p className="register-login">
+          Already have an account? <Link to="/login">Login</Link>
+        </p>
+      </div>
     </div>
   );
 }
