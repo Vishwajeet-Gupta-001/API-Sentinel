@@ -1,0 +1,135 @@
+
+.incident-details-page {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 28px;
+  color: #f1f5f9;
+  box-sizing: border-box;
+}
+
+.incident-details-header {
+  margin-bottom: 24px;
+}
+
+.incident-details-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.incident-details-subtitle {
+  margin: 8px 0 0;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.incident-details-card {
+  overflow: hidden;
+  background: #101827;
+  border: 1px solid #29364b;
+  border-radius: 12px;
+}
+
+.incident-detail-row {
+  display: grid;
+  grid-template-columns: minmax(160px, 0.7fr) minmax(0, 1.3fr);
+  align-items: center;
+  gap: 20px;
+  padding: 17px 20px;
+  border-bottom: 1px solid #253147;
+}
+
+.incident-detail-row:last-child {
+  border-bottom: none;
+}
+
+.incident-detail-row strong {
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.incident-detail-row > span {
+  color: #e2e8f0;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.incident-detail-row .incident-status {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.incident-detail-row .incident-status.open {
+  color: #f87171;
+}
+
+.incident-detail-row .incident-status.acknowledged {
+  color: #fbbf24;
+}
+
+.incident-detail-row .incident-status.resolved {
+  color: #4ade80;
+}
+
+.incident-details-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.incident-action-button {
+  padding: 10px 16px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.acknowledge-button {
+  background: #92400e;
+  border-color: #b45309;
+  color: #fef3c7;
+}
+
+.acknowledge-button:hover {
+  background: #b45309;
+}
+
+.resolve-button {
+  background: #166534;
+  border-color: #15803d;
+  color: #dcfce7;
+}
+
+.resolve-button:hover {
+  background: #15803d;
+}
+
+.incident-action-button:focus-visible {
+  outline: 2px solid #60a5fa;
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .incident-details-page {
+    padding: 20px 12px;
+  }
+
+  .incident-details-title {
+    font-size: 24px;
+  }
+
+  .incident-detail-row {
+    grid-template-columns: 1fr;
+    gap: 7px;
+    padding: 15px;
+  }
+}

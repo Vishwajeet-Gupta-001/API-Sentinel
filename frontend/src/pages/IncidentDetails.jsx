@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import "./IncidentDetails.css";
 
 function IncidentDetails() {
   const { incidentId } = useParams();
@@ -73,74 +74,82 @@ function IncidentDetails() {
     }
   }
 
+  
   return (
-    <div>
-      <h1>Incident Details</h1>
+    <div className="incident-details-page">
+      <div className="incident-details-header">
+        <h1 className="incident-details-title">Incident Details</h1>
+        <p className="incident-details-subtitle">
+          Review incident information and manage its status.
+        </p>
+      </div>
 
       {incident && (
-        <div className="incident-details-card">
-          <div className="incident-detail-row">
-            <strong>Status</strong>
-            <span
-              className={`incident-status ${incident.status.toLowerCase()}`}
-            >
-              {incident.status}
-            </span>
+        <>
+          <div className="incident-details-card">
+            <div className="incident-detail-row">
+              <strong>Status</strong>
+              <span
+                className={`incident-status ${incident.status.toLowerCase()}`}
+              >
+                {incident.status}
+              </span>
+            </div>
+
+            <div className="incident-detail-row">
+              <strong>Started At</strong>
+              <span>{new Date(incident.startedAt).toLocaleString()}</span>
+            </div>
+
+            <div className="incident-detail-row">
+              <strong>Failure Count</strong>
+              <span>{incident.failureCount}</span>
+            </div>
+
+            <div className="incident-detail-row">
+              <strong>Last Error</strong>
+              <span>{incident.lastError || "-"}</span>
+            </div>
+
+            <div className="incident-detail-row">
+              <strong>Acknowledged At</strong>
+              <span>
+                {incident.acknowledgedAt
+                  ? new Date(incident.acknowledgedAt).toLocaleString()
+                  : "-"}
+              </span>
+            </div>
+
+            <div className="incident-detail-row">
+              <strong>Resolved At</strong>
+              <span>
+                {incident.resolvedAt
+                  ? new Date(incident.resolvedAt).toLocaleString()
+                  : "-"}
+              </span>
+            </div>
           </div>
 
-          <div className="incident-detail-row">
-            <strong>Started At</strong>
-            <span>{new Date(incident.startedAt).toLocaleString()}</span>
+          <div className="incident-details-actions">
+            {incident.status === "OPEN" && (
+              <button
+                className="incident-action-button acknowledge-button"
+                onClick={handleAcknowledge}
+              >
+                Acknowledge Incident
+              </button>
+            )}
+
+            {incident.status === "ACKNOWLEDGED" && (
+              <button
+                className="incident-action-button resolve-button"
+                onClick={handleResolve}
+              >
+                Resolve Incident
+              </button>
+            )}
           </div>
-
-          <div className="incident-detail-row">
-            <strong>Failure Count</strong>
-            <span>{incident.failureCount}</span>
-          </div>
-
-          <div className="incident-detail-row">
-            <strong>Last Error</strong>
-            <span>{incident.lastError || "-"}</span>
-          </div>
-
-          <div className="incident-detail-row">
-            <strong>Acknowledged At</strong>
-            <span>
-              {incident.acknowledgedAt
-                ? new Date(incident.acknowledgedAt).toLocaleString()
-                : "-"}
-            </span>
-          </div>
-
-          <div className="incident-detail-row">
-            <strong>Resolved At</strong>
-            <span>
-              {incident.resolvedAt
-                ? new Date(incident.resolvedAt).toLocaleString()
-                : "-"}
-            </span>
-          </div>
-        </div>
-      )}
-
-      {incident && incident.status === "OPEN" && (
-        <div>
-          <button
-            className="incident-action-button acknowledge-button"
-            onClick={handleAcknowledge}
-          >
-            Acknowledge Incident
-          </button>
-        </div>
-      )}
-
-      {incident && incident.status === "ACKNOWLEDGED" && (
-        <button
-          className="incident-action-button resolve-button"
-          onClick={handleResolve}
-        >
-          Resolve Incident
-        </button>
+        </>
       )}
     </div>
   );
