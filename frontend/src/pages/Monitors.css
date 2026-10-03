@@ -1,0 +1,133 @@
+
+.monitors-page {
+  width: 100%;
+  max-width: 1680px;
+  margin: 0 auto;
+  padding: 28px 24px;
+  box-sizing: border-box;
+  color: #cbd5e1;
+}
+
+.monitors-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.monitors-header h1 {
+  margin: 0 0 6px;
+  color: #f1f5f9;
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.monitors-header p {
+  margin: 0;
+  color: #a8b8ce;
+  font-size: 14px;
+}
+
+.create-monitor-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 16px;
+  border: 1px solid #60a5fa;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.create-monitor-button:hover {
+  background: #1d4ed8;
+}
+
+.monitors-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.monitors-message,
+.monitors-error {
+  margin: 0;
+  padding: 20px;
+  color: #cbd5e1;
+  background: #111c2f;
+  border: 1px solid #263247;
+  border-radius: 12px;
+}
+
+.monitors-error {
+  color: #f87171;
+}
+
+.monitors-empty-state {
+  padding: 48px 24px;
+  text-align: center;
+  background: #111c2f;
+  border: 1px solid #263247;
+  border-radius: 14px;
+}
+
+.monitors-empty-state h2 {
+  margin: 0 0 8px;
+  color: #f1f5f9;
+  font-size: 20px;
+}
+
+.monitors-empty-state p {
+  margin: 0 0 22px;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+@media (max-width: 600px) {
+  .monitors-page {
+    padding: 20px 16px;
+  }
+
+  .monitors-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+.monitor-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.monitor-summary-card {
+  padding: 20px;
+  background: #111c2f;
+  border: 1px solid #263247;
+  border-radius: 12px;
+}
+
+.monitor-summary-card p {
+  margin: 0 0 12px;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.monitor-summary-card h2 {
+  margin: 0;
+  color: #f1f5f9;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+@media (max-width: 700px) {
+  .monitor-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

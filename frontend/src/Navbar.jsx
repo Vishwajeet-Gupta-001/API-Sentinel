@@ -1,22 +1,44 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import AuthContext from "./context/AuthContext";
+import "./Navbar.css";
 
 function Navbar() {
   const { isAuthenticated, logout } = useContext(AuthContext);
 
   return (
-    <nav>
-      <h2>API Sentinel</h2>
+    <nav className="app-navbar">
+      <Link to="/dashboard" className="navbar-brand">
+        <span className="brand-icon">A</span>
+        <span>API Sentinel</span>
+      </Link>
 
-      <Link to="/login">Login</Link>
-      <Link to="/dashboard">Dashboard</Link>
-      <Link to="/create-monitor">Create Monitor</Link>
-      <Link to="/incidents">Incidents</Link>
+      <div className="navbar-links">
+        <Link to="/dashboard">Dashboard</Link>
+        <Link to="/monitors">Monitors</Link>
+        <Link to="/incidents">Incidents</Link>
+      </div>
 
-      <p>Authenticated: {isAuthenticated ? "Yes" : "No"}</p>
+      <div className="navbar-actions">
+        <span
+          className={`auth-indicator ${isAuthenticated ? "authenticated" : ""}`}
+        >
+          <span className="auth-dot" />
+          {isAuthenticated ? "Authenticated" : "Not authenticated"}
+        </span>
 
-      <button onClick={logout}>Logout</button>
+        {isAuthenticated && (
+          <button className="logout-button" onClick={logout}>
+            Logout
+          </button>
+        )}
+
+        {!isAuthenticated && (
+          <Link to="/login" className="login-button">
+            Login
+          </Link>
+        )}
+      </div>
     </nav>
   );
 }

@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import AppLayout from "./AppLayout";
 import ProtectedRoute from "./ProtectedRoute";
+import Monitors from "./pages/Monitors";
 import CreateMonitor from "./pages/CreateMonitor";
 import MonitorDetails from "./pages/MonitorDetails";
 import EditMonitor from "./pages/EditMonitor";
@@ -27,6 +28,15 @@ function App() {
             }
           />
 
+          <Route
+            path="/monitors"
+            element={
+              <ProtectedRoute>
+                <Monitors />
+              </ProtectedRoute>
+            }
+          />
+          
           <Route
             path="/create-monitor"
             element={

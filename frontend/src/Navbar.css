@@ -1,0 +1,144 @@
+
+.app-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+  padding: 16px 32px;
+  box-sizing: border-box;
+  background: #111827;
+  border-bottom: 1px solid #263247;
+}
+
+/* Brand */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #f8fafc;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+
+.brand-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: #60a5fa;
+  color: #0b1120;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.navbar-links a {
+  padding: 11px 17px;
+  border-radius: 8px;
+  color: #f1f5f9;
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s;
+}
+
+
+.navbar-links a:hover {
+  background: #263449;
+  color: #ffffff;
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Authentication status */
+.auth-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #cbd5e1;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.auth-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #64748b;
+}
+
+.auth-indicator.authenticated .auth-dot {
+  background: #34d399;
+}
+
+/* Login and Logout buttons */
+.login-button,
+.logout-button {
+  padding: 10px 17px;
+  border: 1px solid #475569;
+  border-radius: 8px;
+  background: #1e293b;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.login-button:hover,
+.logout-button:hover {
+  background: #334155;
+  border-color: #64748b;
+}
+
+@media (max-width: 800px) {
+  .app-navbar {
+    flex-wrap: wrap;
+    padding: 14px 20px;
+    gap: 12px;
+  }
+
+  .navbar-links {
+    order: 3;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .navbar-actions {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-indicator {
+    display: none;
+  }
+
+  .navbar-links {
+    gap: 2px;
+  }
+
+  .navbar-links a {
+    padding: 8px;
+    font-size: 12px;
+  }
+}
