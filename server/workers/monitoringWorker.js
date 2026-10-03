@@ -120,7 +120,7 @@ const monitoringWorker = new Worker(
 
     const newStatus = checkSuccessful ? "UP" : "DOWN";
 
-    if (monitor.status !== "PAUSED" && monitor.status !== newStatus) {
+    if (monitor.enabled && monitor.status !== newStatus) {
       await Monitor.findByIdAndUpdate(monitorId, {
         status: newStatus,
       });
