@@ -17,6 +17,8 @@ function Navbar() {
         <Link to="/dashboard">Dashboard</Link>
         <Link to="/monitors">Monitors</Link>
         <Link to="/incidents">Incidents</Link>
+
+        {isAuthenticated && <Link to="/change-password">Change Password</Link>}
       </div>
 
       <div className="navbar-actions">

@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import ChangePassword from "./pages/ChangePassword";
 import Dashboard from "./pages/Dashboard";
 import AppLayout from "./AppLayout";
 import ProtectedRoute from "./ProtectedRoute";
@@ -20,6 +21,15 @@ function App() {
 
         <Route element={<AppLayout />}>
           <Route
+            path="/change-password"
+            element={
+              <ProtectedRoute>
+                <ChangePassword />
+              </ProtectedRoute>
+            }
+          />
+          
+          <Route
             path="/dashboard"
             element={
               <ProtectedRoute>
@@ -36,7 +46,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          
+
           <Route
             path="/create-monitor"
             element={
