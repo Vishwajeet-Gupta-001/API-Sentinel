@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
+import "./Incidents.css";
 
 function Incidents() {
   const [incidents, setIncidents] = useState([]);
@@ -116,67 +117,79 @@ function Incidents() {
     };
   }, []);
 
+  
   return (
-    <div>
-      <h1>Incidents</h1>
+    <div className="incidents-page">
+      <div className="incidents-header">
+        <div>
+          <h1 className="incidents-title">Incidents</h1>
+          <p className="incidents-subtitle">
+            Monitor and review your API incidents.
+          </p>
+        </div>
 
-      <p>Total incidents: {incidents.length}</p>
+        <div className="incidents-count">
+          Total incidents: <strong>{incidents.length}</strong>
+        </div>
+      </div>
 
       {incidents.length === 0 ? (
-        <p>No incidents available.</p>
+        <div className="incidents-empty">No incidents available.</div>
       ) : (
-        <table className="incident-table">
-          <thead>
-            <tr>
-              <th>Status</th>
-              <th>Started At</th>
-              <th>Failure Count</th>
-              <th>Last Error</th>
-              <th>Acknowledged At</th>
-              <th>Resolved At</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {incidents.map((incident) => (
-              <tr key={incident._id}>
-                <td
-                  className={`incident-status ${incident.status.toLowerCase()}`}
-                >
-                  {incident.status}
-                </td>
-
-                <td>{new Date(incident.startedAt).toLocaleString()}</td>
-
-                <td>{incident.failureCount}</td>
-
-                <td>{incident.lastError || "-"}</td>
-
-                <td>
-                  {incident.acknowledgedAt
-                    ? new Date(incident.acknowledgedAt).toLocaleString()
-                    : "-"}
-                </td>
-
-                <td>
-                  {incident.resolvedAt
-                    ? new Date(incident.resolvedAt).toLocaleString()
-                    : "-"}
-                </td>
-
-                <td>
-                  <button
-                    className="incident-view-button"
-                    onClick={() => navigate(`/incidents/${incident._id}`)}
-                  >
-                    View
-                  </button>
-                </td>
+        <div className="incidents-table-container">
+          <table className="incident-table">
+            <thead>
+              <tr>
+                <th>Status</th>
+                <th>Started At</th>
+                <th>Failure Count</th>
+                <th>Last Error</th>
+                <th>Acknowledged At</th>
+                <th>Resolved At</th>
+                <th>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody>
+              {incidents.map((incident) => (
+                <tr key={incident._id}>
+                  <td
+                    className={`incident-status ${incident.status.toLowerCase()}`}
+                  >
+                    {incident.status}
+                  </td>
+
+                  <td>{new Date(incident.startedAt).toLocaleString()}</td>
+
+                  <td>{incident.failureCount}</td>
+
+                  <td>{incident.lastError || "-"}</td>
+
+                  <td>
+                    {incident.acknowledgedAt
+                      ? new Date(incident.acknowledgedAt).toLocaleString()
+                      : "-"}
+                  </td>
+
+                  <td>
+                    {incident.resolvedAt
+                      ? new Date(incident.resolvedAt).toLocaleString()
+                      : "-"}
+                  </td>
+
+                  <td>
+                    <button
+                      className="incident-view-button"
+                      onClick={() => navigate(`/incidents/${incident._id}`)}
+                    >
+                      View
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
