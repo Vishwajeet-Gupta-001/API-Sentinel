@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import "./EditMonitor.css";
 
 function EditMonitor() {
   const { monitorId } = useParams();
@@ -97,94 +98,146 @@ function EditMonitor() {
     }
   }
 
+  
   return (
-    <div>
-      <h1>Edit Monitor</h1>
+    <div className="edit-monitor-page">
+      <div className="edit-monitor-card">
+        <h1>Edit Monitor</h1>
 
-      {successMessage && <p>{successMessage}</p>}
+        <p className="edit-monitor-description">
+          Update your monitor configuration and monitoring settings.
+        </p>
 
-      {errorMessage && <p>{errorMessage}</p>}
-
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">Name</label>
-          <input
-            id="name"
-            type="text"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="url">URL</label>
-          <input
-            id="url"
-            type="text"
-            value={url}
-            onChange={(event) => setUrl(event.target.value)}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="method">Method</label>
-          <select
-            id="method"
-            value={method}
-            onChange={(event) => setMethod(event.target.value)}
+        {successMessage && (
+          <p
+            className="edit-monitor-message edit-monitor-success"
+            role="status"
           >
-            <option value="GET">GET</option>
-            <option value="POST">POST</option>
-            <option value="PUT">PUT</option>
-            <option value="PATCH">PATCH</option>
-            <option value="DELETE">DELETE</option>
-          </select>
-        </div>
+            {successMessage}
+          </p>
+        )}
 
-        <div>
-          <label htmlFor="expectedStatus">Expected Status</label>
-          <input
-            id="expectedStatus"
-            type="number"
-            value={expectedStatus}
-            onChange={(event) => setExpectedStatus(Number(event.target.value))}
-          />
-        </div>
+        {errorMessage && (
+          <p className="edit-monitor-message edit-monitor-error" role="alert">
+            {errorMessage}
+          </p>
+        )}
 
-        <div>
-          <label htmlFor="interval">Check Interval (seconds)</label>
-          <input
-            id="interval"
-            type="number"
-            value={interval}
-            onChange={(event) => setInterval(Number(event.target.value))}
-          />
-        </div>
+        <form className="edit-monitor-form" onSubmit={handleSubmit}>
+          <div className="edit-monitor-field">
+            <label htmlFor="name">Monitor Name</label>
+            <input
+              id="name"
+              type="text"
+              placeholder="e.g. PayPal API"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+              required
+            />
+          </div>
 
-        <div>
-          <label htmlFor="timeout">Timeout (seconds)</label>
-          <input
-            id="timeout"
-            type="number"
-            value={timeout}
-            onChange={(event) => setTimeout(Number(event.target.value))}
-          />
-        </div>
+          <div className="edit-monitor-field">
+            <label htmlFor="url">Target URL</label>
+            <input
+              id="url"
+              type="url"
+              placeholder="https://example.com"
+              value={url}
+              onChange={(event) => setUrl(event.target.value)}
+              required
+            />
+          </div>
 
-        <div>
-          <label htmlFor="failureThreshold">Failure Threshold</label>
-          <input
-            id="failureThreshold"
-            type="number"
-            value={failureThreshold}
-            onChange={(event) =>
-              setFailureThreshold(Number(event.target.value))
-            }
-          />
-        </div>
+          <div className="edit-monitor-field">
+            <label htmlFor="method">HTTP Method</label>
+            <select
+              id="method"
+              value={method}
+              onChange={(event) => setMethod(event.target.value)}
+            >
+              <option value="GET">GET</option>
+              <option value="POST">POST</option>
+              <option value="PUT">PUT</option>
+              <option value="PATCH">PATCH</option>
+              <option value="DELETE">DELETE</option>
+            </select>
+          </div>
 
-        <button type="submit">Save Changes</button>
-      </form>
+          <div className="edit-monitor-field">
+            <label htmlFor="expectedStatus">Expected Status</label>
+            <input
+              id="expectedStatus"
+              type="number"
+              value={expectedStatus}
+              onChange={(event) =>
+                setExpectedStatus(Number(event.target.value))
+              }
+              required
+            />
+          </div>
+
+          <div className="edit-monitor-field">
+            <label htmlFor="interval">Check Interval (seconds)</label>
+            <input
+              id="interval"
+              type="number"
+              min="1"
+              value={interval}
+              onChange={(event) => setInterval(Number(event.target.value))}
+              required
+            />
+            <p className="edit-monitor-help">
+              How often the monitor checks the target URL.
+            </p>
+          </div>
+
+          <div className="edit-monitor-field">
+            <label htmlFor="timeout">Timeout (seconds)</label>
+            <input
+              id="timeout"
+              type="number"
+              min="1"
+              value={timeout}
+              onChange={(event) => setTimeout(Number(event.target.value))}
+              required
+            />
+            <p className="edit-monitor-help">
+              How long to wait for a response before timing out.
+            </p>
+          </div>
+
+          <div className="edit-monitor-field">
+            <label htmlFor="failureThreshold">Failure Threshold</label>
+            <input
+              id="failureThreshold"
+              type="number"
+              min="1"
+              value={failureThreshold}
+              onChange={(event) =>
+                setFailureThreshold(Number(event.target.value))
+              }
+              required
+            />
+            <p className="edit-monitor-help">
+              Consecutive failures required before an incident is created.
+            </p>
+          </div>
+
+          <div className="edit-monitor-actions">
+            <button className="edit-monitor-submit" type="submit">
+              Save Changes
+            </button>
+
+            <button
+              className="edit-monitor-cancel"
+              type="button"
+              onClick={() => navigate("/dashboard/monitors")}
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
