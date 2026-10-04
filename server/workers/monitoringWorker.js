@@ -84,7 +84,12 @@ const monitoringWorker = new Worker(
 
      checkSuccessful = response.status === monitor.expectedStatus;
 
+     if (!checkSuccessful) {
+       error = `Unexpected HTTP status: ${response.status} (expected ${monitor.expectedStatus})`;
+     }
+
      console.log("Check successful:", checkSuccessful);
+     console.log("Check error:", error);
    }
 
     const checkResult = await CheckResult.create({
