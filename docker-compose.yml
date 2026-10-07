@@ -1,0 +1,34 @@
+services:
+  api:
+    build:
+      context: ./server
+    image: api-sentinel-backend:latest
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./server/.env
+    environment:
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      - redis
+
+  worker:
+    image: api-sentinel-backend:latest
+    env_file:
+      - ./server/.env
+    environment:
+      REDIS_URL: redis://redis:6379
+    command: ["node", "workers/monitoringWorker.js"]
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - api
