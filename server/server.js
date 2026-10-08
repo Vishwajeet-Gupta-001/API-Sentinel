@@ -15,7 +15,11 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost"],
+    origin: [
+      "http://localhost:5173",
+      "http://localhost",
+      "https://api-sentinel-frontend-0j9o.onrender.com",
+    ],
   }),
 );
 
@@ -23,7 +27,11 @@ const httpServer = http.createServer(app);
 
 const io = new Server(httpServer, {
   cors: {
-    origin: ["http://localhost:5173", "http://localhost"],
+    origin: [
+      "http://localhost:5173",
+      "http://localhost",
+      "https://api-sentinel-frontend-0j9o.onrender.com",
+    ],
   },
 });
 
