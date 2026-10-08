@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./IncidentDetails.css";
+import { API_URL } from "../config";
 
 function IncidentDetails() {
   const { incidentId } = useParams();
@@ -12,7 +13,7 @@ function IncidentDetails() {
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        `http://localhost:5000/api/v1/incidents/${incidentId}`,
+        `${API_URL}/api/v1/incidents/${incidentId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -34,7 +35,7 @@ function IncidentDetails() {
     const token = localStorage.getItem("token");
 
     const response = await fetch(
-      `http://localhost:5000/api/v1/incidents/${incidentId}/acknowledge`,
+      `${API_URL}/api/v1/incidents/${incidentId}/acknowledge`,
       {
         method: "PATCH",
         headers: {
@@ -56,7 +57,7 @@ function IncidentDetails() {
     const token = localStorage.getItem("token");
 
     const response = await fetch(
-      `http://localhost:5000/api/v1/incidents/${incidentId}/resolve`,
+      `${API_URL}/api/v1/incidents/${incidentId}/resolve`,
       {
         method: "PATCH",
         headers: {

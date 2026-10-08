@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Register.css";
+import { API_URL } from "../config";
 
 function Register() {
   const [name, setName] = useState("");
@@ -16,7 +17,7 @@ function Register() {
     setMessage("");
     setError("");
 
-    const response = await fetch("http://localhost:5000/api/v1/auth/register", {
+    const response = await fetch(`${API_URL}/api/v1/auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

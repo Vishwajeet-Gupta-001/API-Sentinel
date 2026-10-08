@@ -12,6 +12,7 @@ import {
   Legend,
 } from "recharts";
 import "./Dashboard.css";
+import { API_URL } from "../config";
 
 function Dashboard() {
   const [summary, setSummary] = useState(null);
@@ -21,14 +22,11 @@ function Dashboard() {
     async function fetchSummary() {
       const token = localStorage.getItem("token");
 
-      const response = await fetch(
-        "http://localhost:5000/api/v1/dashboard/summary",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+      const response = await fetch(`${API_URL}/api/v1/dashboard/summary`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      );
+      });
 
       const data = await response.json();
 
@@ -38,14 +36,11 @@ function Dashboard() {
     async function fetchAnalytics() {
       const token = localStorage.getItem("token");
 
-      const response = await fetch(
-        "http://localhost:5000/api/v1/dashboard/analytics",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+      const response = await fetch(`${API_URL}/api/v1/dashboard/analytics`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      );
+      });
 
       const data = await response.json();
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./EditMonitor.css";
+import { API_URL } from "../config";
 
 function EditMonitor() {
   const { monitorId } = useParams();
@@ -25,7 +26,7 @@ function EditMonitor() {
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        `http://localhost:5000/api/v1/monitors/${monitorId}`,
+        `${API_URL}/api/v1/monitors/${monitorId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -61,7 +62,7 @@ function EditMonitor() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/v1/monitors/${monitorId}`,
+        `${API_URL}/api/v1/monitors/${monitorId}`,
         {
           method: "PUT",
           headers: {

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./ChangePassword.css";
+import { API_URL } from "../config";
 
 function ChangePassword() {
   const navigate = useNavigate();
@@ -23,20 +24,17 @@ function ChangePassword() {
     }
 
     try {
-      const response = await fetch(
-        "http://localhost:5000/api/v1/auth/change-password",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: JSON.stringify({
-            currentPassword,
-            newPassword,
-          }),
+      const response = await fetch(`${API_URL}/api/v1/auth/change-password`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-      );
+        body: JSON.stringify({
+          currentPassword,
+          newPassword,
+        }),
+      });
 
       const data = await response.json();
 

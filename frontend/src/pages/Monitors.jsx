@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import MonitorCard from "../MonitorCard";
 import "./Monitors.css";
+import { API_URL } from "../config";
 
 function Monitors() {
   const [monitors, setMonitors] = useState([]);
@@ -27,7 +28,7 @@ function Monitors() {
       try {
         const token = localStorage.getItem("token");
 
-        const response = await fetch("http://localhost:5000/api/v1/monitors", {
+        const response = await fetch(`${API_URL}/api/v1/monitors`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

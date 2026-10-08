@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CreateMonitor.css";
+import { API_URL } from "../config";
 
 function CreateMonitor() {
 
@@ -26,7 +27,7 @@ function CreateMonitor() {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch("http://localhost:5000/api/v1/monitors", {
+      const response = await fetch(`${API_URL}/api/v1/monitors`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

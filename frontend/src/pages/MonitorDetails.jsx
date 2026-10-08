@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import "./MonitorDetails.css";
+import { API_URL } from "../config";
 
 function MonitorDetails() {
   const { monitorId } = useParams();
@@ -9,7 +10,7 @@ function MonitorDetails() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const socket = io("http://localhost:5000");
+    const socket = io(`${API_URL}`);
 
     socket.on("check:created", (check) => {
       if (check.monitorId !== monitorId) {
@@ -31,14 +32,11 @@ function MonitorDetails() {
     async function fetchMonitor() {
       const token = localStorage.getItem("token");
 
-      const response = await fetch(
-        `http://localhost:5000/api/v1/monitors/${monitorId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+      const response = await fetch(`${API_URL}/api/v1/monitors/${monitorId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      );
+      });
 
       const data = await response.json();
 
@@ -55,7 +53,7 @@ function MonitorDetails() {
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        `http://localhost:5000/api/v1/monitors/${monitorId}/checks`,
+        `${API_URL}/api/v1/monitors/${monitorId}/checks`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -79,7 +77,7 @@ function MonitorDetails() {
     const token = localStorage.getItem("token");
 
     const response = await fetch(
-      `http://localhost:5000/api/v1/monitors/${monitorId}/disable`,
+      `${API_URL}/api/v1/monitors/${monitorId}/disable`,
       {
         method: "PATCH",
         headers: {
@@ -101,7 +99,7 @@ function MonitorDetails() {
     const token = localStorage.getItem("token");
 
     const response = await fetch(
-      `http://localhost:5000/api/v1/monitors/${monitorId}/enable`,
+      `${API_URL}/api/v1/monitors/${monitorId}/enable`,
       {
         method: "PATCH",
         headers: {
@@ -131,15 +129,12 @@ function MonitorDetails() {
 
     const token = localStorage.getItem("token");
 
-    const response = await fetch(
-      `http://localhost:5000/api/v1/monitors/${monitorId}`,
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+    const response = await fetch(`${API_URL}/api/v1/monitors/${monitorId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
-    );
+    });
 
     const data = await response.json();
 

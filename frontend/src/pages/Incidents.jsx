@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import "./Incidents.css";
+import { API_URL } from "../config";
 
 function Incidents() {
   const [incidents, setIncidents] = useState([]);
@@ -12,7 +13,7 @@ function Incidents() {
     async function fetchIncidents() {
       const token = localStorage.getItem("token");
 
-      const response = await fetch("http://localhost:5000/api/v1/incidents", {
+      const response = await fetch(`${API_URL}/api/v1/incidents`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -29,7 +30,7 @@ function Incidents() {
   }, []);
 
   useEffect(() => {
-    const socket = io("http://localhost:5000");
+    const socket = io(`${API_URL}`);
 
     socket.on("incident:created", async (event) => {
       console.log("Real-time incident created:", event);
@@ -37,7 +38,7 @@ function Incidents() {
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        `http://localhost:5000/api/v1/incidents/${event.incidentId}`,
+        `${API_URL}/api/v1/incidents/${event.incidentId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -68,7 +69,7 @@ function Incidents() {
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        `http://localhost:5000/api/v1/incidents/${event.incidentId}`,
+        `${API_URL}/api/v1/incidents/${event.incidentId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -93,7 +94,7 @@ function Incidents() {
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        `http://localhost:5000/api/v1/incidents/${event.incidentId}`,
+        `${API_URL}/api/v1/incidents/${event.incidentId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
