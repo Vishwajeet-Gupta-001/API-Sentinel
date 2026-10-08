@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node --env-file=.env server.js",
     "dev": "concurrently \"npm start\" \"node --env-file=.env workers/monitoringWorker.js\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "production": "concurrently \"node server.js\" \"node workers/monitoringWorker.js\""
   },
   "keywords": [],
   "author": "",
@@ -15,6 +16,7 @@
   "dependencies": {
     "bcrypt": "^6.0.0",
     "bullmq": "^6.3.8",
+    "concurrently": "^10.0.5",
     "cors": "^2.8.6",
     "dotenv": "^18.0.3",
     "express": "^5.2.1",
@@ -24,7 +26,6 @@
     "socket.io": "^4.8.4"
   },
   "devDependencies": {
-    "concurrently": "^10.0.5",
     "socket.io-client": "^4.8.4"
   }
 }
