@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import ChangePassword from "./pages/ChangePassword";
@@ -16,6 +17,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
@@ -28,7 +30,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          
+
           <Route
             path="/dashboard"
             element={
