@@ -3,9 +3,19 @@ API Sentinel is a full-stack API monitoring and incident management platform tha
 
 ## Project Status
 
-The core MVP of API Sentinel is implemented and functional, including API monitoring, background job processing, incident management, real-time updates, dashboard analytics, and authentication.
+The API Sentinel MVP has been implemented, deployed, and manually verified across its main application flows.
 
-Further improvements such as containerization, deployment, automated testing, and additional production-oriented features can be added as future enhancements.
+**Live Application:** https://api-sentinel-frontend-0j9o.onrender.com
+
+**Backend API:** https://api-sentinel-backend-server.onrender.com
+
+### Deployment Notes
+
+- The frontend and backend are deployed on Render.
+- MongoDB Atlas is used for persistent application data.
+- Redis and BullMQ support scheduled monitoring jobs and background processing.
+- The monitoring worker currently runs alongside the backend in the same Render web service to avoid the cost of a separate background worker.
+- The application uses free-tier hosting resources. Services may sleep after inactivity, and the free Redis service does not provide persistent storage. Continuous monitoring is therefore not guaranteed.
 
 ## Features
 
@@ -52,8 +62,15 @@ Further improvements such as containerization, deployment, automated testing, an
 - Redis Pub/Sub
 
 ### Development & Tools
-- Postman
+
 - Git & GitHub
+- Postman
+- Docker
+- Docker Compose
+- Nginx
+- Render
+- MongoDB Atlas
+- Visual Studio Code 
 
 ## Architecture
 
@@ -115,15 +132,51 @@ API Sentinel uses Socket.IO with a Redis Pub/Sub bridge to deliver monitoring an
 
 Real-time events include monitor status changes and incident creation, acknowledgement, and resolution.
 
+## Docker and Deployment
+
+API Sentinel uses Docker to containerize the frontend, backend API, background monitoring worker, and Redis service.
+
+- **Docker:** Packages the application components into containers.
+- **Docker Compose:** Defines and runs the application services together.
+- **Nginx:** Serves the production frontend.
+- **Render:** Hosts the deployed frontend and backend.
+- **MongoDB Atlas:** Provides the cloud database.
+- **Redis and BullMQ:** Support scheduled monitoring jobs and background processing.
+
+### Live Deployment
+
+- **Frontend:** https://api-sentinel-frontend-0j9o.onrender.com
+- **Backend API:** https://api-sentinel-backend-server.onrender.com
+- **Health Check:** https://api-sentinel-backend-server.onrender.com/api/v1/health
+
+### Deployment Notes
+
+- The monitoring worker runs alongside the backend in the same Render web service.
+- Free-tier services may sleep after inactivity.
+- Free Redis does not provide persistent storage, so continuous monitoring is not guaranteed.
+
 ## Project Structure
 
 ```text
 API-Sentinel/
-├── docs/                   # Project documentation and requirements
-├── frontend/              # React + Vite frontend application
-├── server/                # Node.js + Express backend application
-├── .gitignore             # Files and folders excluded from Git
-└── README.md              # Project documentation
+├── server/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── services/
+│   ├── workers/
+│   ├── Dockerfile
+│   └── server.js
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   ├── Dockerfile
+│   ├── nginx.conf
+│   └── package.json
+├── docker-compose.yml
+├── .dockerignore
+├── .gitignore
+└── README.md
 ```
 
 ## Getting Started
@@ -206,33 +259,37 @@ http://localhost:5173
 
 ## Usage
 
-Once API Sentinel is running:
+1. Open the [API Sentinel frontend](https://api-sentinel-frontend-0j9o.onrender.com).
+2. Register a new account or log in with an existing account.
+3. Create a monitor by providing the target API URL and the required monitoring settings.
+4. View monitor status, response history, and analytics from the dashboard.
+5. Review incidents generated when monitored APIs fail.
+6. Acknowledge incidents when investigating them and resolve them when appropriate.
+7. Observe real-time updates to monitor statuses and incident events through the dashboard.
 
-1. Register a new account or log in with an existing account.
-2. Create a monitor by providing the target API URL and monitoring configuration.
-3. Enable the monitor to allow scheduled health checks.
-4. View the monitor's current status and check history from the dashboard.
-5. When repeated failures reach the configured threshold, an incident is created automatically.
-6. Review and acknowledge active incidents from the incident management interface.
-7. When the monitored API recovers, the incident is resolved automatically.
-8. Use the analytics section to review monitoring and response-time data.
-9. Real-time monitor and incident changes are reflected in the dashboard through Socket.IO.
+### Backend Health Check
+
+The backend health endpoint can be accessed here:
+
+https://api-sentinel-backend-server.onrender.com/api/v1/health
 
 ## Testing
 
-API Sentinel has been manually verified across the main application flows, including:
+The main application flows were manually verified.
+
+Manual verification covered:
 
 - User registration and login
-- JWT-protected routes
-- Monitor creation, editing, enabling, disabling, and deletion
-- Scheduled monitoring through BullMQ and the monitoring worker
-- Check history and failure reporting
-- Automatic incident creation and recovery
-- Incident acknowledgement and resolution
-- Real-time monitor and incident updates through Socket.IO
-- Dashboard statistics and monitor analytics
+- Monitor creation and management
+- Monitor enable and disable functionality
+- Background monitoring and check-result recording
+- Incident creation, acknowledgement, and resolution
+- Real-time updates through Socket.IO
+- Dashboard analytics and monitor history
+- Frontend and backend deployment
+- Backend health-check endpoint
 
-API endpoints can be tested using Postman, while the frontend can be verified through the running React application.
+Automated test coverage has not yet been added.
 
 ## License
 
